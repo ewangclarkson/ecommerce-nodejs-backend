@@ -1,0 +1,8 @@
+{
+  "database": {
+     "password" : "db_password"
+  },
+  "auth": {
+    "jwtTokenizer": "ecommerce_tokenizer"
+  }
+}
