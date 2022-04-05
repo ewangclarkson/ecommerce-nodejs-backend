@@ -58,7 +58,7 @@ class SubCategoryController {
     validateRequest(category) {
         let schema = Joi.object({
             subcategory_name: Joi.string().required(),
-            Categories_id:Joi.objectId,
+            Categories_id:Joi.objectId.required(),
         });
 
         const {error} = schema.validate(category);

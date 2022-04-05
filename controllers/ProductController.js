@@ -26,7 +26,6 @@ class ProductController {
         }
     }
 
-
     deleteProduct() {
         return async (req, resp) => {
             const product = await this.productModel.getProductById(req.params.id);
@@ -70,9 +69,9 @@ class ProductController {
             price: Joi.number().required(),
             sizes: Joi.array().required(),
             description: Joi.string().required(),
-            quantity:Joi.number().required(),
+            quantity: Joi.number().required(),
             images: Joi.array(),
-            SubCategories_id:Joi.objectId,
+            SubCategories_id: Joi.objectId.required(),
         });
 
         const {error} = schema.validate(product);
