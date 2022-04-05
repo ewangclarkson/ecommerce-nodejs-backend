@@ -1,5 +1,4 @@
 const app = require('../database/config/database');
-const debug = require('debug')('app:dev');
 const _ = require('lodash');
 const config = require('config');
 const jwt = require('jsonwebtoken');

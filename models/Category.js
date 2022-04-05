@@ -1,5 +1,4 @@
 const app = require('../database/config/database');
-const debug = require('debug')('app:dev');
 
 class CategoryModel {
 

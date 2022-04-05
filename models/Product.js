@@ -26,7 +26,11 @@ class ProductModel {
                 sizes: [{type: String, required: true}],
                 quantity: {type: Number, required: true},
                 description: {type: String, required: true},
-                images: [{type: imageSchema, required: true}]
+                images: [{type: imageSchema, required: true}],
+                SubCategories_id: {
+                    type: app.db.Schema.Types.ObjectId,
+                    rel: "SubCategory"
+                }
             },
             {
                 timestamps: {

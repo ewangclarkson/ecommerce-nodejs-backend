@@ -1,6 +1,8 @@
 const _ = require('underscore');
-const Joi = require('joi');
+let Joi = require('joi');
 let SubCategory = require('../models/SubCategory');
+
+Joi.objectId = require('joi-objectid')(Joi);
 
 
 class SubCategoryController {
@@ -55,7 +57,8 @@ class SubCategoryController {
 
     validateRequest(category) {
         let schema = Joi.object({
-            categoryName: Joi.string().required(),
+            subcategory_name: Joi.string().required(),
+            Categories_id:Joi.objectId,
         });
 
         const {error} = schema.validate(category);

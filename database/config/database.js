@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
-const debug = require('debug')('app:dev');
 const database = require('config');
+const logger =require('../../logger/logger');
 
 init()
-    .then(() => debug("Connected to mongoDB"))
-    .catch((error) => debug(error.message));
+    .then(() => logger.info("Connected to mongoDB"));
 
 async function init() {
     await mongoose.connect(database.get('database.host') +

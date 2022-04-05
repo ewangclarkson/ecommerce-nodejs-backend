@@ -1,6 +1,8 @@
 const _ = require('underscore');
-const Joi = require('joi');
-let Product = require('../models/Product');
+let Joi = require('joi');
+const Product = require('../models/Product');
+
+Joi.objectId = require('joi-objectid')(Joi);
 
 
 class ProductController {
@@ -70,6 +72,7 @@ class ProductController {
             description: Joi.string().required(),
             quantity:Joi.number().required(),
             images: Joi.array(),
+            SubCategories_id:Joi.objectId,
         });
 
         const {error} = schema.validate(product);
