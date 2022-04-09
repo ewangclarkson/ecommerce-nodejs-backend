@@ -1,27 +1,28 @@
-const app = require('../database/config/database');
+const mongoose = require('mongoose');
+
 
 class CategoryModel {
 
     constructor() {
-        const categorySchema = new app.db.Schema({
+        const categorySchema = new mongoose.Schema({
                 category_name: {type: String, required: true},
+            },
+            {
+                toJSON:{virtuals: true}
             },
             {
                 timestamps: {
                     createdAt: 'created_at',
                     updateAt: 'updated_at'
                 }
-            }, {
-                toJSON: {virtuals: true},
-                toObject: {virtuals: true}
             });
         //create relationship
-        categorySchema.virtual('subCategories', {
+       categorySchema.virtual('subCategories', {
             ref: 'SubCategory',
             localField: '_id',
             foreignField: 'Categories_id',
         });
-        this.Category = app.db.model('Category', categorySchema);
+        this.Category = mongoose.model('Category', categorySchema);
     }
 
     async createNewCategory(categoryObject) {

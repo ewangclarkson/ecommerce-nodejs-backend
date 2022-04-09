@@ -1,6 +1,6 @@
 const _ = require('underscore');
 const Joi = require('joi');
-let Category = require('../models/Category');
+const Category = require('../models/Category');
 
 
 class CategoryController {
@@ -11,8 +11,8 @@ class CategoryController {
 
     getCategories() {
         return async (req, res) => {
-            const populate = req.query.populate;
-            const categories = populate ? await this.categoryModel.getCategoriesWithPopulation() : await this.categoryModel.getCategories();
+            let populate = parseInt(req.query.populate);
+            const categories = populate ==1?await this.categoryModel.getCategoriesWithPopulation() : await this.categoryModel.getCategories();
             return res.status(200).send(categories);
         }
     }
@@ -49,14 +49,14 @@ class CategoryController {
     createCategory() {
         return async (req, resp) => {
             if (this.validateRequest(req.body)) return resp.status(404).send('bad request'); //not found
-            let category = this.categoryModel.createNewCategory(req.body);
-            return resp.status(200).send(category);
+            let category = await this.categoryModel.createNewCategory(req.body);
+            return resp.status(201).send(category);
         }
     }
 
     validateRequest(category) {
         let schema = Joi.object({
-            categoryName: Joi.string().required(),
+            category_name: Joi.string().required(),
         });
 
         const {error} = schema.validate(category);

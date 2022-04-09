@@ -1,14 +1,14 @@
-const app = require('../database/config/database');
-const debug = require('debug')('app:dev');
+const mongoose = require('mongoose');
+
 
 class SubCategoryModel {
 
     constructor() {
-        this.subCategory = app.db.model('SubCategory',
-            new app.db.Schema({
+        this.subCategory = mongoose.model('SubCategory',
+            new mongoose.Schema({
                     subcategory_name: {type: String, required: true},
                     Categories_id: {
-                        type: app.db.Schema.Types.ObjectId,
+                        type: mongoose.Schema.Types.ObjectId,
                         rel: "Category"
                     }
                 },

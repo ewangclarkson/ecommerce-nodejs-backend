@@ -41,9 +41,7 @@ class ProductController {
             if (this.validateRequest(req.body)) return resp.status(404).send('bad request'); //not found
             const c = await this.productModel.getProductById(req.params.id);
             if (_.isEmpty(c)) return resp.status(404).send(`The resource with id:${req.params.id} could not be found`); //not found
-            const images = req.files.map((item) => {
-                return _.pick(item, ['filename', 'path']);
-            });
+            const images = this.getFormattedImages(req);
             req.body.images = await this.productModel.createNewImages(images);
             let product = await this.productModel.updateProduct(req.params.id, req.body);
             return resp.status(200).send(product);
@@ -52,14 +50,29 @@ class ProductController {
 
     createProduct() {
         return async (req, resp) => {
-            if (this.validateRequest(req.body)) return resp.status(404).send('bad request'); //not found
-            const images = req.files.map((item) => {
-                return _.pick(item, ['filename', 'path']);
-            });
+            console.log(req.body);
+            const error = this.validateRequest(req.body);
+            if (error) return resp.status(404).send(error.message); //not found
+            const images = this.getFormattedImages(req);
             req.body.images = await this.productModel.createNewImages(images);
             let product = await this.productModel.createNewProduct(req.body);
-            return resp.status(200).send(product);
+            return resp.status(201).send(product);
         }
+    }
+
+    getSubCategoryProducts() {
+        return async (req, res) => {
+            const products = await this.productModel.getSubCategoryProducts(req.params.id);
+            return res.status(200).send(products);
+        }
+    }
+
+    getFormattedImages(req) {
+        const hostname = (req.protocol + '://' + req.get('host'));
+        return req.files.map((item) => {
+            item.filename = (hostname + '/assets/' + item.filename);
+            return _.pick(item, ['filename', 'path']);
+        });
     }
 
     validateRequest(product) {
@@ -67,11 +80,11 @@ class ProductController {
             product_name: Joi.string().required(),
             brand: Joi.string().required(),
             price: Joi.number().required(),
-            sizes: Joi.array().required(),
+            sizes: Joi.array(),
             description: Joi.string().required(),
             quantity: Joi.number().required(),
             images: Joi.array(),
-            SubCategories_id: Joi.objectId.required(),
+            SubCategories_id: Joi.objectId,
         });
 
         const {error} = schema.validate(product);

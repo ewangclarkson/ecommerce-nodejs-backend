@@ -1,4 +1,4 @@
-const app = require('../database/config/database');
+const mongoose = require('mongoose');
 const _ = require('lodash');
 const config = require('config');
 const jwt = require('jsonwebtoken');
@@ -6,46 +6,49 @@ const jwt = require('jsonwebtoken');
 class UserModel {
 
     constructor() {
-        this.User = app.db.model('User',
-            new app.db.Schema({
-                    name: {
-                        type: String,
-                        required: true,
-                        minLength: 5,
-                        maxLength: 50
-                    },
-                    username: {
-                        type: String,
-                        required: true,
-                        minLength: 5,
-                        maxLength: 255,
-                        unique: true
-                    },
-                    password: {
-                        type: String,
-                        minLength: 5,
-                        maxLength: 1024,
-                        required: true
-                    },
-                    isAdmin: Boolean,
+        let userSchema =new mongoose.Schema({
+                name: {
+                    type: String,
+                    required: true,
+                    minLength: 5,
+                    maxLength: 50
                 },
-                {
-                    timestamps: {
-                        createdAt: 'created_at',
-                        updateAt: 'updated_at'
-                    }
-                }));
+                username: {
+                    type: String,
+                    required: true,
+                    minLength: 5,
+                    maxLength: 255,
+                    // unique: true
+                },
+                password: {
+                    type: String,
+                    minLength: 5,
+                    maxLength: 1024,
+                    required: true
+                },
+                isAdmin:{
+                    type:Boolean,
+                    required:true
+                },
+            },
+            {
+                timestamps: {
+                    createdAt: 'created_at',
+                    updateAt: 'updated_at'
+                }
+            });
+
+        this.User = mongoose.model('User',userSchema);
     }
 
     async createNewUser(userObject) {
         const user = new this.User(userObject);
-        let resource = await user.save();
-        return _.pick(resource, ['_id', 'name', 'username', 'isAdmin']);
+        return  user.save();
     }
 
 
     async getUsers() {
-        return await this.User.find()
+        return this.User.find()
             .select({_id: 1, name: 1, username: 1, isAdmin: 1});
     }
 
@@ -54,6 +57,10 @@ class UserModel {
         return _.pick(await this.User.findById(id), ['_id', 'name', 'username', 'isAdmin']);
     }
 
+    async getUserByIdWithPassword(id) {
+        const user  =await this.User.findOne({_id:id});
+        return _.pick(user,['_id', 'name', 'username','password', 'isAdmin']);
+    }
 
     async getUserByUsername(username) {
         let user = await this.User.findOne({username: username});
@@ -70,7 +77,7 @@ class UserModel {
 
 
     async deleteUser(id) {
-        return  await this.User.deleteOne({_id: id});
+        return this.User.deleteOne({_id: id});
     }
 
 

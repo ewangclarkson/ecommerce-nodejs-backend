@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
 const database = require('config');
-const logger =require('../../logger/logger');
+const logger = require('../../logger/logger');
 
-init()
-    .then(() => logger.info("Connected to mongoDB"));
+module.exports = function () {
+    init()
+        .then(() => logger.info("Connected to mongoDB"));
+
+};
 
 async function init() {
     await mongoose.connect(database.get('database.host') +
@@ -11,6 +14,3 @@ async function init() {
         + database.get('database.name')
     );
 }
-
-
-module.exports.db=mongoose;

@@ -41,6 +41,7 @@ Route.get('/products/:id', ProductController.getProduct());
 Route.post('/products', [auth, admin,fileMiddleWare.array('images',4)], ProductController.createProduct());
 Route.put('/products/:id', [auth, admin,fileMiddleWare.array('images',4)], ProductController.updateProduct());
 Route.delete('/products/:id', [auth, admin], ProductController.deleteProduct());
+Route.get('/subcategory/products/:id',ProductController.getSubCategoryProducts());
 
 /**
  * Manage User
@@ -52,5 +53,7 @@ Route.post('/users', [auth, admin], UserController.createUser());
 Route.put('/users/:id', [auth, admin], UserController.updateUser());
 Route.delete('/users/:id', [auth, admin], UserController.deleteUser());
 Route.post('/login', UserController.authenticateUser());
+Route.put('/users/reset/:id', [auth, admin], UserController.resetUserPassword());
+Route.put('/users/change_password/:id', [auth, admin], UserController.changeUserPassword());
 
 module.exports = Route;

@@ -1,13 +1,11 @@
-const app = require('../database/config/database');
 const fs = require('fs');
-const path = require('path');
-const debug = require('debug')('app:dev');
+const mongoose = require('mongoose');
 const _ = require('underscore');
 
 class ProductModel {
 
     constructor() {
-        const imageSchema = new app.db.Schema({
+        const imageSchema = new mongoose.Schema({
                 filename: {type: String, required: true},
                 path: {type: String, required: true},
             },
@@ -17,18 +15,18 @@ class ProductModel {
                     updateAt: 'updated_at'
                 }
             });
-        this.Image = app.db.model('Image', imageSchema);
+        this.Image = mongoose.model('Image', imageSchema);
 
-        const productSchema = new app.db.Schema({
+        const productSchema = new mongoose.Schema({
                 product_name: {type: String, required: true},
                 brand: {type: String, required: true},
                 price: {type: Number, required: true},
-                sizes: [{type: String, required: true}],
+                sizes: [String],
                 quantity: {type: Number, required: true},
                 description: {type: String, required: true},
                 images: [{type: imageSchema, required: true}],
                 SubCategories_id: {
-                    type: app.db.Schema.Types.ObjectId,
+                    type: mongoose.Schema.Types.ObjectId,
                     rel: "SubCategory"
                 }
             },
@@ -39,7 +37,7 @@ class ProductModel {
                 }
             });
 
-        this.Product = app.db.model('Product', productSchema);
+        this.Product = mongoose.model('Product', productSchema);
     }
 
     async createNewProduct(productObject) {
@@ -58,6 +56,12 @@ class ProductModel {
 
     async getProducts() {
         return await this.Product.find();
+
+    }
+
+
+    async getSubCategoryProducts(sId) {
+        return await this.Product.find({SubCategories_id: sId});
 
     }
 
