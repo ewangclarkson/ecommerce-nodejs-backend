@@ -14,7 +14,6 @@ class UserController {
         return async (req, resp) => {
             let error = this.validateAuthUser(req.body);
             if (error) return resp.status(400).send(error.message); //not found
-
             const auth = await this.userModel.getUserByUsername(req.body.username);
 
             if (_.isEmpty(auth)) return resp.status(400).send("invalid username or password");

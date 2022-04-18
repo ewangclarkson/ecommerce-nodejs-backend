@@ -7,7 +7,7 @@ const webRoutes = require('./web');
 const error = require('../middleware/error');
 
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: "http://localhost:3000",
     optionsSuccessStatus: 200,
     exposedHeaders: 'x-auth-token',
 };
@@ -16,8 +16,8 @@ const corsOptions = {
 module.exports=function (app){
     app.use(compression());
     app.use(express.json());
-    app.use(express.static('public'));
     app.use(cors(corsOptions));
+    app.use(express.static('public'));
     app.use(helmet({crossOriginEmbedderPolicy: false}));
     app.use('/api', apiRoutes);
     app.use('/', webRoutes);

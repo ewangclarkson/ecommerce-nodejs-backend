@@ -4,5 +4,11 @@
   },
   "auth": {
     "jwtTokenizer": "ecommerce_tokenizer"
+  },
+  "momo": {
+    "collectionsPrimaryKey": "COLLECTIONS_PRIMARY_KEY",
+    "collectionsUserId": "COLLECTIONS_USER_ID",
+    "collectionsUserSecret":"COLLECTIONS_USER_SECRET"
+
   }
 }

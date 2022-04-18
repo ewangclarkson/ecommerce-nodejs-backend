@@ -1,3 +1,4 @@
+
 const fs = require('fs');
 const mongoose = require('mongoose');
 const _ = require('underscore');
@@ -68,6 +69,13 @@ class ProductModel {
 
     async getProductById(id) {
         return this.Product.findById(id);
+    }
+
+    async updateProductAttr(id, productObject) {
+        const product = await this.getProductById(id);
+        return this.Product.findByIdAndUpdate({_id: id}, {
+            $set: productObject
+        }, {new: true});
     }
 
     async updateProduct(id, productObject) {

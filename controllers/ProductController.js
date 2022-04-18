@@ -50,7 +50,6 @@ class ProductController {
 
     createProduct() {
         return async (req, resp) => {
-            console.log(req.body);
             const error = this.validateRequest(req.body);
             if (error) return resp.status(404).send(error.message); //not found
             const images = this.getFormattedImages(req);
@@ -75,6 +74,19 @@ class ProductController {
         });
     }
 
+    async updateProductQuantityBasedOnInventory(inventories) {
+        for (let inventory of inventories) {
+            const product = await this.productModel.getProductById(inventory.Products_id);
+            if (product) {
+                const diff = product.quantity - inventory.quantity;
+                if (diff > 0) {
+                    await this.productModel.updateProductAttr(product._id, {
+                        quantity: diff
+                    });
+                }
+            }
+        }
+    }
     validateRequest(product) {
         let schema = Joi.object({
             product_name: Joi.string().required(),
