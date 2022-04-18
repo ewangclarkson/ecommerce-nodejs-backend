@@ -7,7 +7,7 @@ const webRoutes = require('./web');
 const error = require('../middleware/error');
 
 const corsOptions = {
-    origin: "http://localhost:3000/",
+    origin: "http://192.168.43.55:3000",
     optionsSuccessStatus: 200,
     exposedHeaders: 'x-auth-token',
 };
