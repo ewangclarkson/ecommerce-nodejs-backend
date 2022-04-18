@@ -1,6 +1,6 @@
 {
   "database": {
-     "password" : "db_password"
+     "db" : "DB"
   },
   "auth": {
     "jwtTokenizer": "ecommerce_tokenizer"
