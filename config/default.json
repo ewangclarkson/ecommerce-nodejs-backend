@@ -1,8 +1,6 @@
 {
   "database": {
-      "host":"mongodb://localhost:",
-      "port": "27017",
-      "name": "ecommerce"
+
   },
   "jwt": {
 

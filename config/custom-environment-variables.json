@@ -1,6 +1,6 @@
 {
   "database": {
-     "db" : "DB"
+     "appDB" : "DB_CONNECT"
   },
   "auth": {
     "jwtTokenizer": "ecommerce_tokenizer"

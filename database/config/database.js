@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const database = require('config');
+const config = require('config');
 const logger = require('../../logger/logger');
 
 module.exports = function () {
@@ -8,6 +8,7 @@ module.exports = function () {
 
 };
 
+
 async function init() {
-    await mongoose.connect(database.get('database.db'));
+    await mongoose.connect(config.get('database.appDB'));
 }
