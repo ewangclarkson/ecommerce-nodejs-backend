@@ -16,9 +16,9 @@ const corsOptions = {
 module.exports=function (app){
     app.use(compression());
     app.use(express.json());
-    app.use(cors(corsOptions));
     app.use(express.static('public'));
     app.use(helmet({crossOriginEmbedderPolicy: false}));
+    app.use(cors(corsOptions));
     app.use('/api', apiRoutes);
     app.use('/', webRoutes);
     app.use(error);
