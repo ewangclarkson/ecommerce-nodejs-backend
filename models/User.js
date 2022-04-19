@@ -82,7 +82,7 @@ class UserModel {
 
 
     async generateAuthToken(user) {
-        return jwt.sign(user, config.get('auth.jwtTokenizer'),{expiresIn:'24h'});
+        return jwt.sign(user, config.get('auth.jwtTokenizer'),{expiresIn:'5h'});
     }
 }
 
