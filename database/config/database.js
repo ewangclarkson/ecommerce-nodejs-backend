@@ -10,6 +10,6 @@ module.exports = function () {
 
 
 async function init() {
-    //await mongoose.connect(config.get('database.appDB'));
-    await mongoose.connect('mongodb://127.0.0.1:27017/ecommerce');
+    await mongoose.connect(config.get('database.appDB'));
+   // await mongoose.connect('mongodb://127.0.0.1:27017/ecommerce');
 }
