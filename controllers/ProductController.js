@@ -92,7 +92,6 @@ class ProductController {
             product_name: Joi.string().required(),
             brand: Joi.string().required(),
             price: Joi.number().required(),
-            sizes: Joi.array(),
             description: Joi.string().required(),
             quantity: Joi.number().required(),
             images: Joi.array(),
