@@ -2,3 +2,4 @@
 #ignore git folder
 node_modules/
 coverage/
+public/
