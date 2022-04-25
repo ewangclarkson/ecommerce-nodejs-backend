@@ -6,14 +6,16 @@ const apiRoutes = require('./api');
 const webRoutes = require('./web');
 const error = require('../middleware/error');
 
+
+
 const corsOptions = {
-    origin: "*",
+    origin: "https://vims-ecommerce.netlify.app/",
     optionsSuccessStatus: 200,
     exposedHeaders: 'x-auth-token',
 };
 
 
-module.exports=function (app){
+module.exports = function (app) {
     app.use(compression());
     app.use(express.json());
     app.use(express.static('public'));

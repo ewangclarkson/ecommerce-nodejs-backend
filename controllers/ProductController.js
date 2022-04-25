@@ -1,7 +1,7 @@
 const _ = require('underscore');
 let Joi = require('joi');
 const Product = require('../models/Product');
-
+const config = require('config');
 Joi.objectId = require('joi-objectid')(Joi);
 
 
@@ -67,9 +67,9 @@ class ProductController {
     }
 
     getFormattedImages(req) {
-        const hostname = (req.protocol + '://' + req.get('host'));
         return req.files.map((item) => {
-            item.filename = (hostname + '/assets/' + item.filename);
+            item.filename = item.location;
+            item.path =item.key;
             return _.pick(item, ['filename', 'path']);
         });
     }
@@ -87,6 +87,7 @@ class ProductController {
             }
         }
     }
+
     validateRequest(product) {
         let schema = Joi.object({
             product_name: Joi.string().required(),

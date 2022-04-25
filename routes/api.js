@@ -2,7 +2,9 @@ const express = require('express');
 const Route = express.Router();
 const auth = require('../middleware/auth');
 const admin = require('../middleware/admin');
-const fileMiddleWare = require('../middleware/file');//fileMiddleWare upload middleware
+//const fileMiddleWare = require('../middleware/file');//fileMiddleWare upload middleware
+const s3BucketMiddleware = require('../middleware/s3');//upload files to amazon bucket
+const config = require('config');
 /**
  * Local Imports
  */
@@ -16,7 +18,6 @@ const PaymentController = require('../controllers/PaymentController');
 /**
  * Manage Categories
  */
-
 
 Route.get('/subcategories', SubCategoryController.getSubCategories());
 Route.get('/subcategories/:id', SubCategoryController.getSubCategory());
@@ -39,8 +40,8 @@ Route.delete('/categories/:id', [auth, admin], CategoryController.deleteCategory
  */
 Route.get('/products', ProductController.getProducts());
 Route.get('/products/:id', ProductController.getProduct());
-Route.post('/products', [auth, admin, fileMiddleWare.array('images', 4)], ProductController.createProduct());
-Route.put('/products/:id', [auth, admin, fileMiddleWare.array('images', 4)], ProductController.updateProduct());
+Route.post('/products', [auth, admin, s3BucketMiddleware.array('images', 4)], ProductController.createProduct());
+Route.put('/products/:id', [auth, admin, s3BucketMiddleware.array('images', 4)], ProductController.updateProduct());
 Route.delete('/products/:id', [auth, admin], ProductController.deleteProduct());
 Route.get('/subcategory/products/:id', ProductController.getSubCategoryProducts());
 

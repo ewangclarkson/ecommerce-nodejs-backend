@@ -1,7 +1,9 @@
-
+const config = require('config');
 const fs = require('fs');
 const mongoose = require('mongoose');
 const _ = require('underscore');
+const aws = require('aws-sdk');
+
 
 class ProductModel {
 
@@ -94,10 +96,21 @@ class ProductModel {
     }
 
     async bulkDeleteImages(images) {
+        const s3 = new aws.S3({
+            accessKeyId: config.get('aws.awsAccessKey'),
+            secretAccessKey: config.get('aws.awsSecretKey'),
+            Bucket: config.get('aws.s3BucketName')
+        });
+
+        const bucketName = config.get('aws.s3BucketName');
         for (const image of images) {
-            if (fs.existsSync(image.path)) {
-                fs.unlinkSync(image.path)
-            }
+            /* if (fs.existsSync(image.path)) {
+                 fs.unlinkSync(image.path)
+             }*/
+            //const imgKey = image.filename.substring(image.filename.lastIndexOf('/') + 1);
+             s3.deleteObject({Bucket: bucketName, Key: image.path},function(error,file){
+
+             });
             await this.deleteImageById(image._id);
         }
     }

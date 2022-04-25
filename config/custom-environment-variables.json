@@ -10,5 +10,11 @@
     "collectionsUserId": "COLLECTIONS_USER_ID",
     "collectionsUserSecret":"COLLECTIONS_USER_SECRET"
 
+  },
+  "aws": {
+    "awsAccessKey": "AWS_ACCESS_KEY_ID",
+    "awsSecretKey": "AWS_SECRET_ACCESS_KEY",
+    "s3BucketName" : "S3_BUCKET_NAME",
+    "s3HostName" : "https://vims-app-assets.s3.amazonaws.com/"
   }
 }

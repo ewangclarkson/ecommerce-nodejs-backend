@@ -6,5 +6,8 @@
   },
   "momo": {
 
+  },
+  "aws": {
+    "s3HostName" : "https://vims-app-assets.s3.amazonaws.com/"
   }
 }
