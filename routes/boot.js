@@ -9,7 +9,7 @@ const error = require('../middleware/error');
 
 
 const corsOptions = {
-    origin: "https://vims-ecommerce.netlify.app/",
+    origin: "*",
     optionsSuccessStatus: 200,
     exposedHeaders: 'x-auth-token',
 };
