@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  node:
+    image: node-backend
+    container_name: node
+    build:
+      context: .
+    ports:
+      - 8000:8000
+    networks:
+      - communication-tier
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - S3_BUCKET_NAME=vims-app-assets
+      - AWS_SECRET_ACCESS_KEY=AEb/kyu0BDHBmFjIlV3Ju26Ye1gdXXydRvkkBYvl
+      - AWS_ACCESS_KEY_ID=AKIAS65LTMMUST7SPOHX
+      - COLLECTIONS_PRIMARY_KEY=f5a458726391447887b535b2e7960add
+      - COLLECTIONS_USER_SECRET=016dc3f1cce9406baec3706cfb4bcdc1
+      - COLLECTIONS_USER_ID=7be60c17-4844-40df-95c3-7226074fa9fb
+      - ecommerce_tokenizer=secrettoken
+      - DB_CONNECT=mongodb+srv://ewangclarks:Jesusislordforever@cluster0.4lec3.mongodb.net/ecommerce?retryWrites=true&w=majority
+  ecommerce:
+    depends_on:
+      - node
+    image: ecommerce-react
+    container_name: ecommerce
+    ports:
+      - 3000:3000
+    networks:
+      - communication-tier
+    restart: always
+
+networks:
+  communication-tier:
+
+
+
