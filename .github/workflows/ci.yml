@@ -42,4 +42,4 @@ jobs:
       uses: docker/build-push-action@v3
       with:
           push: true
-          tags: ewangclarks/node-back-end:latest
+          tags: ewangclarks/node-back-end:V1.0
